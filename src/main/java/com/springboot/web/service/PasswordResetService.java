@@ -1,20 +1,25 @@
 package com.springboot.web.service;
 
-import com.springboot.web.model.Employee;
-import com.springboot.web.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.stereotype.Service;
+
+import com.springboot.web.model.Employee;
+import com.springboot.web.repository.UserRepository;
 
 @Service
 public class PasswordResetService {
 
     @Autowired
     private UserRepository userRepository;
-    
+
+    @Autowired
+    private JavaMailSender mailSender;  // Inject the mail sender
 
     private Map<String, String> verificationCodeStorage = new HashMap<>();
 
@@ -28,7 +33,9 @@ public class PasswordResetService {
         String code = generateVerificationCode();
         verificationCodeStorage.put(email, code);
 
-        // Simulate sending the code via email
+        // Send the code via email
+        sendEmail(email, code);
+
         System.out.println("Password reset code sent to: " + email);
         System.out.println("Code: " + code);
 
@@ -63,10 +70,13 @@ public class PasswordResetService {
         int code = 100000 + random.nextInt(900000); // Generate a 6-digit code
         return String.valueOf(code);
     }
-    
-  
-   
 
- 
-
+    // Method to send email with the password reset code
+    private void sendEmail(String email, String code) {
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setTo(email);
+        message.setSubject("Password Reset Code");
+        message.setText("Your password reset code is: " + code);
+        mailSender.send(message);
+    }
 }
