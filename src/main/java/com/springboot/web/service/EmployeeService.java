@@ -38,26 +38,23 @@ public class EmployeeService {
     // Service method to validate employee login by email and password
     public Boolean isValidUser(String email, String password) {
         // Debugging: Print the email we are trying to find
-        System.out.println("Searching for employee with email: " + email.trim());
+
         
         // Find employee by email and trim any extra spaces
         Employee employee = employeeRepository.findByEmail(email.trim());
 
         // Debugging: Print whether employee was found
-        if (employee == null) {
-            System.out.println("Employee not found");
-        } else {
-            System.out.println("Employee found with email: " + employee.getEmail());
-        }
+    
 
         // Check if employee exists and if password matches
         if (employee != null && employee.getPassword().equals(password.trim())) {
             System.out.println("Password matched");
             return true;
-        } else {
-            System.out.println("Invalid credentials: email or password incorrect");
-            return false;
-        }
+        } 
+        return false;
+    }
+    public Employee getEmployeeByEmail(String email) {
+        return employeeRepository.findByEmail(email.trim());
     }
 
     // Optionally add a method to update an employee's password (for forgot-password flow)

@@ -1,6 +1,8 @@
 package com.springboot.web.controller;
 
-import java.util.List;
+import java.util.HashMap;
+import java.util.List; // Correct import for Map
+import java.util.Map; // Correct import for HashMap
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -56,7 +58,7 @@ public class EmployeeController {
     }
 
     @GetMapping("/employee/login")
-    public ResponseEntity<Boolean> isValidEmployee(@RequestParam String email, @RequestParam String password) {
+    public ResponseEntity<Map<String,Object>> isValidEmployee(@RequestParam String email, @RequestParam String password) {
         // Trim email and password to avoid spaces causing issues
         String trimmedEmail = email.trim();
         String trimmedPassword = password.trim();
@@ -66,14 +68,25 @@ public class EmployeeController {
         System.out.println("Received password: " + trimmedPassword);
     
         Boolean isValid = employeeService.isValidUser(trimmedEmail, trimmedPassword);
+         Map<String,Object> response = new HashMap<>();
     
         if (isValid) {
-            System.out.println("Login successful");
+            Employee employee = employeeService.getEmployeeByEmail(trimmedEmail);
+        if (employee != null) {
+
+            System.out.println("Login successful"+ employee.getUsername());
+            response.put("isValid", true);
+            response.put("Username", employee.getUsername()); // Add employee's name to the response
         } else {
-            System.out.println("Login failed");
+            response.put("isValid", false);
+            response.put("message", "Employee not found");
         }
+    } else {
+        response.put("isValid", false);
+        response.put("message", "Invalid credentials");
+    }
     
-        return new ResponseEntity<>(isValid, HttpStatus.OK);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
     
     // Static admin credentials
