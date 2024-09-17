@@ -15,7 +15,7 @@ public class WebConfig{
 	            @Override
 	            public void addCorsMappings(CorsRegistry registry) {
 	                registry.addMapping("/api/**")
-	                        .allowedOrigins("http://localhost:5173")  // Allow the origin where your React app is running
+	                        .allowedOrigins("http://localhost:5173","https://erp-frontend-phi-nine.vercel.app/")  // Allow the origin where your React app is running
 	                        .allowedMethods("GET", "POST", "PUT", "DELETE")
 	                        .allowedHeaders("*")
 	                        .allowCredentials(true);
