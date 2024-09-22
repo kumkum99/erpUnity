@@ -24,7 +24,7 @@ public class FeedbackController {
      @Autowired
     private FeedbackService feedbackService;
 
-    @CrossOrigin(origins = "http://localhost:5173") // Adjust the port if needed
+    @CrossOrigin(origins = "https://erp-frontend-phi-nine.vercel.app/") // Adjust the port if needed
     @PostMapping("/submit")
     public ResponseEntity<Feedback> feedbackData(@RequestBody Feedback feedback) {
         System.out.println("Received feedback data: " + feedback);

@@ -21,7 +21,7 @@ import com.springboot.web.service.EmployeeService;
 
 @RestController
 @RequestMapping("/api")
-@CrossOrigin(origins = "http://localhost:5173") // Adjust the origin as needed for CORS
+@CrossOrigin(origins = "https://erp-frontend-phi-nine.vercel.app/") // Adjust the origin as needed for CORS
 public class EmployeeController {
 
     @Autowired
@@ -77,6 +77,12 @@ public class EmployeeController {
             System.out.println("Login successful"+ employee.getUsername());
             response.put("isValid", true);
             response.put("Username", employee.getUsername()); // Add employee's name to the response
+            response.put("FirstName", employee.getFirstname());  // Updated key
+            response.put("LastName", employee.getLastname());    // Updated key
+            response.put("Dob", employee.getDob());
+            response.put("Email", employee.getEmail());
+            response.put("Phone", employee.getPhone());
+            response.put("Password", employee.getPassword());
         } else {
             response.put("isValid", false);
             response.put("message", "Employee not found");

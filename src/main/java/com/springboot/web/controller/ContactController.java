@@ -22,7 +22,7 @@ public class ContactController {
     @Autowired
     private ContactService contactService;
 
-    @CrossOrigin(origins = "http://localhost:5173") // Adjust the port if needed
+    @CrossOrigin(origins = "https://erp-frontend-phi-nine.vercel.app/") // Adjust the port if needed
     @PostMapping("/submit")
     public ResponseEntity<Contact> contactData(@RequestBody Contact contact) {
         System.out.println("Received contact data: " + contact);

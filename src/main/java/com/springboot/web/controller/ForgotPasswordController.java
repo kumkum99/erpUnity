@@ -20,7 +20,7 @@ public class ForgotPasswordController {
     @Autowired
     private PasswordResetService passwordResetService;
 
-    @CrossOrigin(origins = "http://localhost:5173") // Allow requests from your React application
+    @CrossOrigin(origins = "https://erp-frontend-phi-nine.vercel.app/") // Allow requests from your React application
     @PostMapping("/send-reset-code")
     public ResponseEntity<String> sendResetCode(@RequestBody Map<String, String> request) {
         String email = request.get("email");
